@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        body { font-family: sans-serif; margin:0; padding:0; background:#f9f9f9; }
+        nav { background: #333; color: #fff; padding: 1rem; display:flex; justify-content: space-between; }
+        nav a { color: white; margin-right: 15px; text-decoration: none;}
+        .container { padding: 2rem; }
+        .card { background: white; padding: 1rem; border-radius: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+    <nav>
+        <div>
+            <b>Insighta Labs+</b>
+            <a href="/dashboard" style="margin-left: 20px;">Dashboard</a>
+            <a href="/profiles">Profiles</a>
+            <a href="/search">Search</a>
+            <a href="/account">Account</a>
+        </div>
+        <form action="/logout" method="POST" style="display:inline;">
+            <input type="hidden" name="_csrf" value="<%= typeof csrfToken !== 'undefined' ? csrfToken : '' %>">
+            <button type="submit" style="background:transparent; border:none; color:white; cursor:pointer;">Logout</button>
+        </form>
+    </nav>
+    <div class="container">
+        <h1>Dashboard</h1>
+        <div class="card">
+            <h2>Overview</h2>
+            <p>Total Profiles in Database: <strong><%= total %></strong></p>
+        </div>
+
+        <h3>Recent Profiles</h3>
+        <% profiles.forEach(function(p) { %>
+            <div class="card">
+                <a href="/profiles/<%= p.id %>"><%= p.name %></a> - <%= p.gender %> | <%= p.country_name %>
+            </div>
+        <% }) %>
+    </div>
+</body>
+</html>

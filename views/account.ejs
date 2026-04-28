@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Settings</title>
+    <style>
+        body { font-family: sans-serif; margin:0; padding:0; background:#f9f9f9; }
+        nav { background: #333; color: #fff; padding: 1rem; display:flex; justify-content: space-between; }
+        nav a { color: white; margin-right: 15px; text-decoration: none;}
+        .container { padding: 2rem; max-width: 600px; margin: auto;}
+        .card { background: white; padding: 2rem; border-radius: 5px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-top:20px; text-align: center;}
+    </style>
+</head>
+<body>
+    <nav>
+        <div>
+            <b>Insighta Labs+</b>
+            <a href="/dashboard" style="margin-left: 20px;">Dashboard</a>
+            <a href="/profiles">Profiles</a>
+            <a href="/search">Search</a>
+            <a href="/account">Account</a>
+        </div>
+        <form action="/logout" method="POST" style="display:inline;">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <button type="submit" style="background:transparent; border:none; color:white; cursor:pointer;">Logout</button>
+        </form>
+    </nav>
+    <div class="container">
+        <div class="card">
+            <h2>Account Details</h2>
+            <p>You are logged in securely.</p>
+            <form action="/logout" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" style="padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">Sign Out completely</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
