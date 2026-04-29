@@ -25,20 +25,16 @@ function requireAuth(req, res, next) {
 }
 
 async function apiFetch(method, endpoint, req, data = null) {
-    try {
-        const headers = { 'X-API-Version': '1' };
-        if (req.cookies.access_token) headers['Authorization'] = `Bearer ${req.cookies.access_token}`;
-        
-        const response = await axios({
-            method,
-            url: `${BACKEND_URL}${endpoint}`,
-            headers,
-            data
-        });
-        return response.data;
-    } catch (e) {
-        throw e;
-    }
+    const headers = { 'X-API-Version': '1' };
+    if (req.cookies.access_token) headers['Authorization'] = `Bearer ${req.cookies.access_token}`;
+    
+    const response = await axios({
+        method,
+        url: `${BACKEND_URL}${endpoint}`,
+        headers,
+        data
+    });
+    return response.data;
 }
 
 app.get('/', (req, res) => res.redirect('/dashboard'));
@@ -126,7 +122,9 @@ app.get('/account', requireAuth, csrfProtection, async (req, res) => {
 app.post('/logout', requireAuth, csrfProtection, async (req, res) => {
     try {
         await apiFetch('POST', '/auth/logout', req, { refresh_token: req.cookies.refresh_token });
-    } catch (e) {}
+    } catch (e) {
+        console.error('Logout API failure:', e.message);
+    }
     res.clearCookie('access_token');
     res.clearCookie('refresh_token');
     res.redirect('/login');
